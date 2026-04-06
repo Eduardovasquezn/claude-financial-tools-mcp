@@ -1,8 +1,8 @@
-# Multimodal Financial Document RAG System
+# Claude Financial Intelligence System
 
-A system that searches **both text and images** in financial PDFs using multimodal embeddings, vector search, and the Model Context Protocol (MCP).
+Equip Claude Desktop with custom tools to search **both text and images** in financial PDFs using multimodal embeddings, vector search, and the Model Context Protocol (MCP).
 
-**The Problem:** Traditional RAG systems only index text, missing 50%+ of information locked in charts, graphs, and visualizations.
+**The Problem:** Traditional search systems only index text, missing 50%+ of information locked in charts, graphs, and visualizations.
 
 **The Solution:** This system embeds both text chunks AND images into the same 3072-dimensional vector space using Google Gemini's multimodal embeddings, then exposes search tools to Claude Desktop via MCP.
 
@@ -278,8 +278,8 @@ Open `http://localhost:6333/dashboard` to:
 ## 🤝 Contributing
 
 Contributions welcome! This is a learning project showcasing:
-- Multimodal RAG implementation
-- MCP server development
+- Building custom Claude Desktop tools via MCP
+- Multimodal search implementation
 - Vector database optimization
 - Hybrid search strategies
 
