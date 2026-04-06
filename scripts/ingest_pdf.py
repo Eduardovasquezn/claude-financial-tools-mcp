@@ -5,7 +5,7 @@ from pathlib import Path
 
 from src.config import Config
 from src.helpers.logs import get_logger
-from src.scripts.pdf_ingestion import PDFIngestionPipeline
+from src.ingestion.pdf_ingestion import PDFIngestionPipeline
 
 logger = get_logger()
 
