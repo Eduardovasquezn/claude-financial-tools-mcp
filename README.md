@@ -300,12 +300,13 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-## � Community & Contact
+## 💬 Join the Community
 
-**Join the Discussion:**
-- 💬 [Discord Community](https://discord.gg/xFKKuyMG) - Ask questions, share ideas, and collaborate
-- 💼 [LinkedIn](https://www.linkedin.com/in/eduardo-vasquez-n) - Connect professionally
+Interested in AI, machine learning, and data science? **Join our community to learn and share:**
 
-Found this helpful? Give it a ⭐ on GitHub!
+- 💬 **[Discord Community](https://discord.gg/xFKKuyMG)** - Discuss AI, ML, data science, and build cool projects together
+- 💼 **[LinkedIn](https://www.linkedin.com/in/eduardo-vasquez-n)** - Let's connect and stay in touch
+
+Found this project helpful? Give it a ⭐ on GitHub!
 
  
