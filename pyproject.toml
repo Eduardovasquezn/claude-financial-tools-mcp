@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-tools-claude"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "google-genai>=1.68.0",
+    "langchain-community>=0.4.1",
+    "mcp>=1.26.0",
+    "pillow>=11.0.0",
+    "pypdf>=6.9.2",
+    "python-dotenv>=1.2.2",
+    "qdrant-client>=1.17.1",
+    "rich>=14.3.3",
+    "unstructured[pdf]>=0.16.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

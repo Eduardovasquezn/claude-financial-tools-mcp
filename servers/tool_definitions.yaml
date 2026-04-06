@@ -1,0 +1,179 @@
+# MCP Tool Definitions for Qdrant Financial Documents
+# Edit descriptions and schemas here without touching Python code
+
+tools:
+  - name: search_documents
+    description: |
+      Find specific information about ONE TOPIC using semantic vector search.
+      Returns only the most relevant chunks matching your search query.
+      
+      ⚠️ CRITICAL: If you already called filter_by_metadata, DO NOT use this tool.
+      You already have all the data - just analyze what you received.
+      
+      USE THIS FOR:
+      - Specific questions: "What was Q3 revenue?" "What risks were mentioned?"
+      - Topic-focused queries: "What did Jensen say about AI chips?"
+      - Finding particular information within documents
+      
+      NEVER USE THIS FOR:
+      - General summaries: "Summarize Q3 earnings" (use filter_by_metadata ONLY)
+      - After calling filter_by_metadata (you already have the data)
+      - Getting all documents (use filter_by_metadata instead)
+      
+      EXAMPLES:
+      ✅ "What was NVIDIA's Q3 revenue number?" → query="revenue", ticker="NVDA", quarter="Q3"
+      ✅ "What did Jensen say about AI chips?" → query="Jensen Huang AI chips"
+      ✅ "What risks were mentioned in Q2?" → query="risks", quarter="Q2"
+      ❌ "Summarize Q3 earnings" → Use filter_by_metadata ONLY, not this tool
+      ❌ "Show me Q3 data" → Use filter_by_metadata ONLY, not this tool
+    schema:
+      type: object
+      properties:
+        query:
+          type: string
+          description: "Natural language search query (e.g., 'revenue growth strategy')"
+        ticker:
+          type: string
+          description: "Optional: Filter by stock ticker (e.g., 'NVDA', 'AAPL')"
+        quarter:
+          type: string
+          description: "Optional: Filter by quarter (e.g., 'Q1', 'Q2', 'Q3', 'Q4')"
+        year:
+          type: string
+          description: "Optional: Filter by year (e.g., '2026', '2025')"
+        limit:
+          type: integer
+          description: Maximum number of results (default 5)
+          default: 5
+      required:
+        - query
+
+  - name: filter_by_metadata
+    description: |
+      Retrieve ALL documents for a complete quarter/year using metadata filters only.
+      No semantic search - returns the entire dataset you need for comprehensive analysis.
+      
+      ⚠️ CRITICAL: After calling this tool, you have everything needed.
+      DO NOT call search_documents next. Just analyze what you received.
+      
+      USE THIS FOR:
+      - General summaries: "Summarize Q3 earnings" "Analyze Q2 performance"
+      - Getting complete data: "Show me Q3 data" "Give me all Q4 documents"
+      - Full quarter analysis where you need ALL information
+      
+      NEVER USE THIS FOR:
+      - Specific questions about one topic (use search_documents instead)
+      - Finding particular information (use search_documents instead)
+      
+      WORKFLOW:
+      1. Optional: Call get_available_data first to check document counts
+      2. Set appropriate limit (20-50 for complete data)
+      3. Call this tool to get all documents
+      4. Analyze/summarize the results yourself - STOP here, no more tool calls
+      
+      EXAMPLES:
+      ✅ "Summarize NVIDIA Q3 2025 earnings" → ticker="NVDA", quarter="Q3", year="2025", limit=30
+      ✅ "Analyze Q2 performance" → ticker="NVDA", quarter="Q2", year="2025", limit=30
+      ✅ "Show me all Q4 docs" → ticker="NVDA", quarter="Q4", year="2025", limit=50
+      ❌ "What was Q3 revenue number?" → Use search_documents (specific question)
+      ❌ "What did Jensen say about AI?" → Use search_documents (specific topic)
+    schema:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: "Stock ticker symbol (e.g., 'NVDA', 'AAPL')"
+        quarter:
+          type: string
+          description: "Quarter (e.g., 'Q1', 'Q2', 'Q3', 'Q4')"
+        year:
+          type: string
+          description: "Year (e.g., '2026', '2025')"
+        limit:
+          type: integer
+          description: Maximum results (default 10)
+          default: 10
+      required: []
+
+  - name: compare_quarters
+    description: |
+      Compare financial information across multiple quarters for trend analysis.
+      Returns documents grouped by quarter so you can show side-by-side comparisons.
+      
+      WHEN TO USE:
+      - "Compare Q3 vs Q4 revenue"
+      - "How did data center revenue change quarter over quarter?"
+      - "Show me YoY comparison"
+      - Any question with "compare", "vs", "versus", "difference between"
+      
+      EXAMPLES:
+      - "Compare NVIDIA Q3 and Q4 2025 AI chip revenue" → Use this tool
+      - "What's the trend in gaming revenue?" → Use this tool
+    schema:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: "Stock ticker (e.g., 'NVDA')"
+        quarters:
+          type: array
+          items:
+            type: string
+          description: "List of quarters to compare (e.g., ['Q1', 'Q2'])"
+        year:
+          type: string
+          description: "Year (e.g., '2026')"
+        query:
+          type: string
+          description: "Optional: semantic search query to filter relevant content"
+        limit_per_quarter:
+          type: integer
+          description: Max documents per quarter (default 5)
+          default: 5
+      required:
+        - ticker
+        - quarters
+        - year
+
+  - name: get_available_data
+    description: |
+      **USE THIS FIRST** when user asks about data availability or when you're unsure if you have information.
+      Discovers what tickers, quarters, and years are in the database.
+      
+      ⚡ RETURNS: Document counts by ticker/quarter/year - USE THESE COUNTS to choose intelligent limits!
+      
+      SMART USAGE PATTERN:
+      1. Call this FIRST to see: "NVDA Q4 2026 has 67 documents"
+      2. Then call filter_by_metadata with appropriate limit (e.g., 15-20 for that query)
+      3. Avoids multiple calls with different limits!
+      
+      WHEN TO USE:
+      - "What data do you have?"
+      - "Do you have Tesla earnings?" → Check first!
+      - "What quarters are available for NVIDIA?"
+      - At the START of a conversation to know what you can answer
+      - BEFORE calling filter_by_metadata - check counts first to choose smart limits!
+      - BEFORE saying "I don't have that data" - always check here first!
+      
+      CRITICAL: If user asks about a company/quarter, use this to verify data exists before searching.
+    schema:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: "Optional: Get metadata for specific ticker only"
+      required: []
+
+  - name: get_collection_stats
+    description: |
+      Get database statistics (total documents, collection health).
+      Use for technical debugging or when user asks "how much data do you have?"
+      
+      WHEN TO USE:
+      - "How many documents are stored?"
+      - "Is the database working?"
+      - Technical troubleshooting
+    schema:
+      type: object
+      properties: {}
+      required: []
