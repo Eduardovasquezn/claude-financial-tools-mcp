@@ -7,6 +7,9 @@ Equip Claude Desktop with custom tools to search **both text and images** in fin
 **The Solution:** This system embeds both text chunks AND images into the same 3072-dimensional vector space using Google Gemini's multimodal embeddings, then exposes search tools to Claude Desktop via MCP.
 
 ![Sample](images/sample.png)
+
+> 💬 **¿Hablas español?** Join our [Spanish-speaking Telegram community](https://t.me/IA_CienciaDeDatos_ES) to discuss AI, ML, and data science projects!
+
 ---
 
 ## 🎯 Key Features
@@ -304,7 +307,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 Interested in AI, machine learning, and data science? **Join our community to learn and share:**
 
-- 💬 **[Discord Community](https://discord.gg/xFKKuyMG)** - Discuss AI, ML, data science, and build cool projects together
+- 💬 **[Telegram Community (Spanish)](https://t.me/IA_CienciaDeDatos_ES)** - Discuss AI, ML, data science, and build cool projects together (Spanish-speaking community)
 - 💼 **[LinkedIn](https://www.linkedin.com/in/eduardo-vasquez-n)** - Let's connect and stay in touch
 
 Found this project helpful? Give it a ⭐ on GitHub!
