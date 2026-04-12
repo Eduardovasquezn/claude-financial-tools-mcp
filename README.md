@@ -2,13 +2,13 @@
 
 Equip Claude Desktop with custom tools to search **both text and images** in financial PDFs using multimodal embeddings, vector search, and the Model Context Protocol (MCP).
 
+> 💬 **¿Hablas español?** Join our [Spanish-speaking Telegram community](https://t.me/IA_CienciaDeDatos_ES) to discuss AI, ML, and data science projects!
+
 **The Problem:** Traditional search systems only index text, missing 50%+ of information locked in charts, graphs, and visualizations.
 
 **The Solution:** This system embeds both text chunks AND images into the same 3072-dimensional vector space using Google Gemini's multimodal embeddings, then exposes search tools to Claude Desktop via MCP.
 
 ![Sample](images/sample.png)
-
-> 💬 **¿Hablas español?** Join our [Spanish-speaking Telegram community](https://t.me/IA_CienciaDeDatos_ES) to discuss AI, ML, and data science projects!
 
 ---
 
